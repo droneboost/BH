@@ -135,8 +135,10 @@ int Pin::getRaspberryPiVersion() const
 {
     char buffer[MAX_SIZE_LINE];
     const char* hardware_description_entry = "Hardware";
-    const char* v1 = "BCM2708";
-    const char* v2 = "BCM2709";
+    const char* v1  = "BCM2708";
+    const char* v2  = "BCM2709";
+    const char* v22 = "BCM2835";
+
     char* flag;
     FILE* fd;
 
@@ -146,7 +148,8 @@ int Pin::getRaspberryPiVersion() const
         flag = strstr(buffer, hardware_description_entry);
 
         if (flag != NULL) {
-            if (strstr(buffer, v2) != NULL) {
+            if (strstr(buffer, v2)  != NULL ||
+                strstr(buffer, v22) != NULL ){
                 fclose(fd);
                 return 2;
             } else if (strstr(buffer, v1) != NULL) {
